@@ -1,0 +1,25 @@
+name: continous
+
+on: 
+  push: 
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: check-out
+        uses: actions/checkout@v4
+
+      - name: configure
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: building
+        run: |
+          pip install -r requirements.txt
+
+      - name: running
+        run: |
+          pytest
