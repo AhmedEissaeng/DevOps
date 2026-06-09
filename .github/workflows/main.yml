@@ -1,25 +1,25 @@
-name: continous
+name: Laravel CI
 
-on: 
-  push: 
-  pull_request:
+on:
+  push:
+    branches:
+      - main
 
 jobs:
-  test:
+  build:
     runs-on: ubuntu-latest
+
     steps:
-      - name: check-out
+      - name: Checkout
         uses: actions/checkout@v4
 
-      - name: configure
-        uses: actions/setup-python@v5
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
         with:
-          python-version: "3.12"
+          php-version: '8.3'
 
-      - name: building
-        run: |
-          pip install -r requirements.txt
+      - name: Install Dependencies
+        run: composer install
 
-      - name: running
-        run: |
-          pytest
+      - name: Run Tests
+        run: vendor/bin/phpunit
